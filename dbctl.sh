@@ -30,10 +30,12 @@ usage() {
     echo "MongoDB controller"
     echo ""
     echo "COMMANDS"
-    echo "  start   |  start the container"
-    echo "  stop    |  stop the container"
-    echo "  run     |  run the mongodb command"
-    echo "  count   |  return the total number of instances in database"
+    echo "  start          |  start the container"
+    echo "  stop           |  stop the container"
+    echo "  run <command>  |  run the mongodb command"
+    echo "  count          |  return the total number of instances in database"
+    echo "  show           |  show basic information in MongoDB"
+
 }
 
 [[ $1 == '' ]] && usage && exit 0
@@ -45,6 +47,13 @@ elif [[ $1 == 'run' ]]; then
     run "$2"
 elif [[ $1 == 'count' ]]; then
     count
+elif [[ $1 == 'show' ]]; then
+    echo 'Databases:'
+    run 'db.getMongo().getDBNames()'
+    echo ''
+    echo 'Collections:'
+    run 'db.getCollectionNames()'
+    # run 'db.getCollectionInfos()'
 else
     echo 'Command not supported!' && exit 1
 fi
